@@ -1,5 +1,5 @@
 <template>
-  <v-row class="login justify-center align-center">
+  <v-row class="login justify-center align-center pb-5">
     <v-col cols="5">
       <v-card>
         <v-card-title class="font-weight-bold"> Inicio de sesión </v-card-title>
