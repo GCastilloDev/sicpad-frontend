@@ -1,6 +1,6 @@
 <template>
-<v-app-bar>
-    <v-toolbar-title>SICPAD</v-toolbar-title>
+<v-app-bar color="error" dark flat>
+    <v-toolbar-title class="font-weight-bold text-h4">SICPAD</v-toolbar-title>
 </v-app-bar>
 </template>
 
