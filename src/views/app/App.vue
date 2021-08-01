@@ -39,6 +39,7 @@
   </v-app> -->
   <v-app>
     <v-main>
+      <nav-bar></nav-bar>
       <h1>Home</h1>
       <router-view />
     </v-main>
@@ -48,7 +49,9 @@
 <script>
 export default {
   name: "App",
-
+  components: {
+    navBar: () => import("./components/navBar")
+  },
   data: () => ({
     //
   }),
