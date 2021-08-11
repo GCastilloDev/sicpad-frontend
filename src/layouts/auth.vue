@@ -3,8 +3,8 @@
     <v-main>
       <nav-bar></nav-bar>
       <v-row class="prueba">
-        <v-col>
-          <v-navigation-drawer permanent>
+        <v-col cols="2" class="ma-0 pr-0">
+          <v-navigation-drawer width="100%" permanent>
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title class="text-h6">
@@ -29,33 +29,35 @@
             </v-list>
           </v-navigation-drawer>
         </v-col>
+        <v-col cols="10" class="pl-0">
+          <router-view />
+        </v-col>
       </v-row>
-      <router-view />
     </v-main>
     <footer-component></footer-component>
   </v-app>
 </template>
 
 <script>
-export default {
-  name: "LayoutAuth",
-  components: {
-    footerComponent: () => import("../components/core/footer.vue"),
-    navBar: () => import("../components/core/navBar.vue"),
-  },
-  data: () => ({
-    items: [
-      { title: "Dashboard", icon: "mdi-view-dashboard" },
-      { title: "Photos", icon: "mdi-image" },
-      { title: "About", icon: "mdi-help-box" },
-    ],
-    right: null,
-  }),
-};
+  export default {
+    name: 'LayoutAuth',
+    components: {
+      footerComponent: () => import('../components/core/footer.vue'),
+      navBar: () => import('../components/core/navBar.vue'),
+    },
+    data: () => ({
+      items: [
+        { title: 'Dashboard', icon: 'mdi-view-dashboard' },
+        { title: 'Photos', icon: 'mdi-image' },
+        { title: 'About', icon: 'mdi-help-box' },
+      ],
+      right: null,
+    }),
+  };
 </script>
 
 <style lang="scss" scoped>
-.prueba {
-  min-height: 100%;
-}
+  .prueba {
+    min-height: 100%;
+  }
 </style>
