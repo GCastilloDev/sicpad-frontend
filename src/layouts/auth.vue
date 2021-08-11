@@ -17,7 +17,12 @@
             <v-divider></v-divider>
 
             <v-list dense nav>
-              <v-list-item v-for="item in items" :key="item.title" link>
+              <v-list-item
+                v-for="item in items"
+                :key="item.title"
+                :to="{ name: item.to }"
+                link
+              >
                 <v-list-item-icon>
                   <v-icon>{{ item.icon }}</v-icon>
                 </v-list-item-icon>
@@ -47,9 +52,9 @@
     },
     data: () => ({
       items: [
-        { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-        { title: 'Photos', icon: 'mdi-image' },
-        { title: 'About', icon: 'mdi-help-box' },
+        { title: 'Alumnos', icon: 'mdi-school', to: 'FamilyGuy' },
+        { title: 'Tutores', icon: 'mdi-human-male-child', to: 'FamilyGuy' },
+        { title: 'Maestros', icon: 'mdi-teach', to: 'FamilyGuy' },
       ],
       right: null,
     }),
