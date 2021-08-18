@@ -7,9 +7,16 @@
         tile
         color="primary"
         @click="$router.push({ name: 'StudentAdd' })"
+        :loading="loading"
         >Registrar alumno</v-btn
       >
     </div>
+
+    <v-data-table
+      :headers="headers"
+      :items="alumnos"
+      class="elevation-1"
+    ></v-data-table>
   </v-container>
 </template>
 
@@ -17,42 +24,41 @@
   import { db } from '../../../helpers/firebase';
   export default {
     mounted() {
-      this.getCategoria();
+      this.getData();
     },
     data: () => ({
       categorias: '',
-      overlay: false,
+      loading: false,
+      alumnos: [],
+      headers: [
+        { text: 'Matrícula', value: 'matricula' },
+        {
+          text: 'Nombre',
+          align: 'start',
+          sortable: false,
+          value: 'nombre',
+        },
+        { text: 'Apellido paterno', value: 'apellidoPaterno' },
+        { text: 'Apellido materno', value: 'apellidoMaterno' },
+        { text: 'Teléfono', value: 'telefono' },
+        { text: 'Email', value: 'email' },
+        { text: 'Grupo', value: 'grupo' },
+        { text: 'Turno', value: 'turno' },
+        { text: 'Tutor', value: 'tutor' },
+      ],
     }),
     methods: {
-      async getCategoria() {
+      async getData() {
         try {
-          const { docs } = await db.collection('categorias').get();
-          const categorias = docs.map(async (e) => {
-            const item = {};
-            item.categoria = e.data().nombre;
-            item.servicios = await this.getServicios(item.categoria);
-            return item;
-          });
-          this.categorias = await Promise.all(categorias);
-          this.overlay = false;
-          console.log(this.categorias);
-        } catch (error) {
-          console.warn(error);
-        }
-      },
-      async getServicios(categoria) {
-        try {
-          const { docs } = await db
-            .collection('servicios')
-            .where('categoria', '==', categoria)
-            .get();
-          return docs.map((e) => {
-            const data = {
+          this.loading = true;
+          const { docs } = await db.collection('estudiantes').get();
+          this.alumnos = docs.map((e) => {
+            return {
               ...e.data(),
               id: e.id,
             };
-            return data;
           });
+          this.loading = false;
         } catch (error) {
           console.warn(error);
         }
