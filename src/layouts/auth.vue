@@ -52,7 +52,7 @@
     },
     data: () => ({
       items: [
-        { title: 'Alumnos', icon: 'mdi-school', to: 'FamilyGuy' },
+        { title: 'Alumnos', icon: 'mdi-school', to: 'Student' },
         { title: 'Tutores', icon: 'mdi-human-male-child', to: 'FamilyGuy' },
         { title: 'Maestros', icon: 'mdi-teach', to: 'FamilyGuy' },
       ],

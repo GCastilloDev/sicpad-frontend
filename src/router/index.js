@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 // Rutas de los modulos
 import { authRoutes } from '../views/auth/routes';
 import { familyGuyRoutes } from '../views/familyGuy/routes';
+import { studentRoutes } from '../views/student/routes';
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,7 @@ const routes = [
           ),
       },
       ...familyGuyRoutes,
+      ...studentRoutes,
     ],
   },
   ...authRoutes,
