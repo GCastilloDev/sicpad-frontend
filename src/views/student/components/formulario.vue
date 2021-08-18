@@ -6,6 +6,7 @@
 
         <v-col cols="4">
           <v-text-field
+            v-model="alumno.nombre"
             label="Nombre(s)"
             placeholder="Ingrese el nombre"
             outlined
@@ -14,6 +15,7 @@
         </v-col>
         <v-col cols="4">
           <v-text-field
+            v-model="alumno.apellidoPaterno"
             label="Apellido paterno"
             placeholder="Ingrese el apellido paterno"
             outlined
@@ -22,6 +24,7 @@
         </v-col>
         <v-col cols="4">
           <v-text-field
+            v-model="alumno.apellidoMaterno"
             label="Apellido materno"
             placeholder="Ingrese el apellido materno"
             outlined
@@ -31,6 +34,7 @@
 
         <v-col cols="3">
           <v-text-field
+            v-model="alumno.email"
             label="Email"
             placeholder="Ingrese el email"
             type="email"
@@ -41,6 +45,7 @@
 
         <v-col cols="3">
           <v-text-field
+            v-model="alumno.celular"
             label="Celular"
             placeholder="Ingrese el número de celular"
             outlined
@@ -50,6 +55,7 @@
 
         <v-col cols="3">
           <v-text-field
+            v-model="alumno.telefono"
             label="Teléfono"
             placeholder="Ingrese el número de teléfono"
             outlined
@@ -65,6 +71,7 @@
         <v-col cols="12"><h2>Datos escolares</h2></v-col>
         <v-col cols="3">
           <v-text-field
+            v-model="alumno.matricula"
             label="Matrícula"
             placeholder="Ingrese la matrícula"
             outlined
@@ -72,51 +79,84 @@
           ></v-text-field>
         </v-col>
         <v-col cols="3">
-          <v-combobox
+          <v-autocomplete
+            v-model="alumno.turno"
             placeholder="Seleccione un turno"
             :items="turnos"
             outlined
             dense
           >
-          </v-combobox>
+          </v-autocomplete>
         </v-col>
         <v-col cols="3">
-          <v-combobox placeholder="Seleccione un grupo" outlined dense
+          <v-autocomplete placeholder="Seleccione un grupo" outlined dense
             ><template slot="append-outer">
               <v-btn icon x-small color="primary"
                 ><v-icon>mdi-plus-circle</v-icon></v-btn
               >
-            </template></v-combobox
+            </template></v-autocomplete
           >
         </v-col>
         <v-col cols="3">
-          <v-combobox placeholder="Seleccione un tutor" outlined dense
+          <v-autocomplete placeholder="Seleccione un tutor" outlined dense
             ><template slot="append-outer">
               <v-btn icon x-small color="primary"
                 ><v-icon>mdi-plus-circle</v-icon></v-btn
               >
-            </template></v-combobox
+            </template></v-autocomplete
           >
         </v-col>
       </v-row>
     </v-form>
-    <v-card-action class="d-flex justify-end">
-      <v-btn class="text-none" color="primary" depressed
+    <div class="d-flex justify-end">
+      <v-btn
+        class="text-none"
+        color="primary"
+        depressed
+        @click="guardarEstudiante"
         >Registrar
         <v-icon right>mdi-text-box-plus</v-icon>
       </v-btn>
-    </v-card-action>
+    </div>
   </v-card>
 </template>
 
 <script>
+  import { db } from '../../../helpers/firebase';
+
   export default {
     name: 'formularioEstudiante',
     data: () => ({
       prueba: '',
       checkbox: true,
       turnos: ['MATUTINO', 'VESPERTINO'],
+      alumno: {
+        nombre: '',
+        apellidoPaterno: '',
+        apellidoMaterno: '',
+        email: '',
+        celular: '',
+        telefono: '',
+        matricula: '',
+        turno: '',
+        grupo: '',
+        tutor: '',
+      },
     }),
+    methods: {
+      async guardarEstudiante() {
+        try {
+          await db
+            .collection('estudiantes')
+            .doc()
+            .set(this.alumno);
+
+          this.$router.push({ name: 'Student' });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
   };
 </script>
 
