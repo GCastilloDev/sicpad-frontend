@@ -69,7 +69,7 @@
           ></v-checkbox>
         </v-col>
         <v-col cols="12"><h2>Datos escolares</h2></v-col>
-        <v-col cols="3">
+        <v-col cols="4">
           <v-text-field
             v-model="alumno.matricula"
             label="Matrícula"
@@ -78,18 +78,16 @@
             dense
           ></v-text-field>
         </v-col>
-        <v-col cols="3">
+
+        <v-col cols="4">
           <v-autocomplete
-            v-model="alumno.turno"
-            placeholder="Seleccione un turno"
-            :items="turnos"
+            v-model="alumno.grupo"
+            placeholder="Seleccione un grupo"
             outlined
             dense
-          >
-          </v-autocomplete>
-        </v-col>
-        <v-col cols="3">
-          <v-autocomplete placeholder="Seleccione un grupo" outlined dense
+            :items="grupos"
+            item-text="nombre"
+            return-object
             ><template slot="append-outer">
               <v-btn icon x-small color="primary"
                 ><v-icon>mdi-plus-circle</v-icon></v-btn
@@ -97,9 +95,17 @@
             </template></v-autocomplete
           >
         </v-col>
-        <v-col cols="3">
-          <v-autocomplete placeholder="Seleccione un tutor" outlined dense
-            ><template slot="append-outer">
+        <v-col cols="4">
+          <v-autocomplete
+            v-model="alumno.tutor"
+            placeholder="Seleccione un tutor"
+            :items="tutores"
+            return-object
+            item-text="nombreCompleto"
+            outlined
+            dense
+          >
+            <template slot="append-outer">
               <v-btn icon x-small color="primary"
                 ><v-icon>mdi-plus-circle</v-icon></v-btn
               >
@@ -126,10 +132,15 @@
 
   export default {
     name: 'formularioEstudiante',
+    async mounted() {
+      await this.getTutores();
+      await this.getGrupos();
+    },
     data: () => ({
-      prueba: '',
+      grupos: [],
       checkbox: true,
       turnos: ['MATUTINO', 'VESPERTINO'],
+      tutores: [],
       alumno: {
         nombre: '',
         apellidoPaterno: '',
@@ -138,7 +149,6 @@
         celular: '',
         telefono: '',
         matricula: '',
-        turno: '',
         grupo: '',
         tutor: '',
       },
@@ -154,6 +164,35 @@
           this.$router.push({ name: 'Student' });
         } catch (error) {
           console.log(error);
+        }
+      },
+      async getTutores() {
+        try {
+          const { docs } = await db.collection('tutores').get();
+          this.tutores = docs.map((e) => {
+            return {
+              nombreCompleto: `${e.data().nombre} ${e.data().apellidoPaterno} ${
+                e.data().apellidoMaterno
+              }`,
+              ...e.data(),
+              id: e.id,
+            };
+          });
+        } catch (error) {
+          console.warn(error);
+        }
+      },
+      async getGrupos() {
+        try {
+          const { docs } = await db.collection('grupos').get();
+          this.grupos = docs.map((e) => {
+            return {
+              ...e.data(),
+              id: e.id,
+            };
+          });
+        } catch (error) {
+          console.warn(error);
         }
       },
     },

@@ -42,9 +42,9 @@
         { text: 'Apellido materno', value: 'apellidoMaterno' },
         { text: 'Teléfono', value: 'telefono' },
         { text: 'Email', value: 'email' },
-        { text: 'Grupo', value: 'grupo' },
-        { text: 'Turno', value: 'turno' },
-        { text: 'Tutor', value: 'tutor' },
+        { text: 'Grupo', value: 'grupo.nombre' },
+        { text: 'Turno', value: 'grupo.turno' },
+        { text: 'Tutor', value: 'tutor.nombreCompleto' },
       ],
     }),
     methods: {

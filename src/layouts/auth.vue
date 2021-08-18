@@ -55,6 +55,7 @@
         { title: 'Alumnos', icon: 'mdi-school', to: 'Student' },
         { title: 'Tutores', icon: 'mdi-human-male-child', to: 'FamilyGuy' },
         { title: 'Maestros', icon: 'mdi-teach', to: 'FamilyGuy' },
+        { title: 'Grupos', icon: 'mdi-account-group', to: 'Groups' },
       ],
       right: null,
     }),
